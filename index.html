@@ -1,42 +1,163 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>HL GROUPE</title>
+
+  <!-- Favicon doré inline -->
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,
+  <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+    <rect width="100%" height="100%" fill="black"/>
+    <text x="50%" y="55%" font-family="Segoe UI, Arial" font-size="42" font-weight="700"
+          fill="#FFD700" text-anchor="middle" dominant-baseline="middle">HL</text>
+  </svg>' />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #111, #444);
-      color: white;
-      text-align: center;
-      padding: 100px 20px;
+    :root {
+      --gold: #FFD700;
+      --bg: #000000;
+      --glass: rgba(255,255,255,0.10);
     }
-    h1 {
-      font-size: 48px;
-      margin-bottom: 20px;
-      letter-spacing: 1px;
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; height: 100%;
+      font-family: 'Segoe UI', system-ui, Arial, sans-serif;
+      color: #fff; background: var(--bg); overflow-x: hidden;
     }
-    p {
-      font-size: 20px;
-      opacity: 0.85;
-      max-width: 600px;
-      margin: auto;
+
+    .video-bg {
+      position: fixed; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; z-index: -2; opacity: 0.65;
     }
+    .fallback-bg {
+      position: fixed; inset: 0; z-index: -3;
+      background: linear-gradient(135deg, #0a0a0a 0%, #111 50%, #1a1a1a 100%);
+      animation: hueShift 16s ease-in-out infinite alternate;
+    }
+    @keyframes hueShift {
+      0% { filter: hue-rotate(0deg) saturate(1.1); }
+      100% { filter: hue-rotate(25deg) saturate(1.25); }
+    }
+
+    header {
+      padding: 18px 24px;
+      display: flex; align-items: center; gap: 16px; justify-content: center;
+      background: rgba(0,0,0,0.55); backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .brand-title {
+      font-size: 28px; letter-spacing: 0.06em; margin: 0;
+    }
+
+    main { max-width: 1100px; margin: 50px auto; padding: 0 24px; }
+    .impact {
+      display: grid; gap: 10px; justify-items: center; margin-bottom: 30px;
+      animation: fadeIn 1.6s ease-in-out;
+    }
+    .impact p { margin: 0; font-size: 1.4rem; opacity: 0.95; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .stats {
+      display: grid; grid-template-columns: repeat(3, minmax(180px, 1fr));
+      gap: 16px; margin: 26px 0;
+    }
+    .card {
+      background: var(--glass); border: 1px solid rgba(255,255,255,0.12);
+      padding: 20px; border-radius: 14px; backdrop-filter: blur(8px);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0,0,0,0.35); }
+    .metric { font-size: 2rem; font-weight: 800; color: var(--gold); }
+    .label { font-size: 0.95rem; opacity: 0.9; }
+
+    .team {
+      display: grid; grid-template-columns: repeat(3, minmax(220px, 1fr));
+      gap: 16px; margin-top: 24px;
+    }
+    .member h3 { margin: 0 0 6px; font-size: 1.1rem; }
+    .member p { margin: 0; opacity: 0.9; }
+
     footer {
-      margin-top: 80px;
-      font-size: 14px;
-      opacity: 0.6;
+      margin: 50px auto 60px; max-width: 900px; padding: 22px;
+      background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px; backdrop-filter: blur(8px);
+    }
+    .form {
+      display: inline-flex; flex-wrap: wrap; gap: 10px; align-items: center;
+      margin-top: 10px;
+    }
+    input[type="email"] {
+      padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.08); color: #fff; width: 240px;
+      outline: none;
+    }
+    button {
+      padding: 10px 16px; border-radius: 8px; border: none;
+      background: var(--gold); color: #000; font-weight: 700; cursor: pointer;
+      transition: filter 0.2s ease, transform 0.15s ease;
+    }
+    button:hover { filter: brightness(1.05); transform: translateY(-1px); }
+
+    @media (max-width: 860px) {
+      .stats { grid-template-columns: 1fr; }
+      .team  { grid-template-columns: 1fr; }
+      .brand-title { font-size: 22px; }
     }
   </style>
 </head>
 <body>
-  <h1>Bienvenue chez HL GROUPE</h1>
-  <p>Création digitale, automatisation de contenu, portfolio vidéo, formulaire de contact stylisé.<br>
-  Projet piloté par Hammouda Kadi (Dika), orienté vers l’impact visuel, la stratégie créative et l’efficacité technique.</p>
+  <div class="fallback-bg" aria-hidden="true"></div>
+
+  <video class="video-bg" autoplay muted loop playsinline>
+    <source src="drone-city.mp4" type="video/mp4">
+  </video>
+
+  <header>
+    <!-- Logo doré inline SVG -->
+    <svg width="56" height="56" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="2" y="2" width="60" height="60" rx="10" fill="#000" stroke="#444" stroke-width="2"/>
+      <text x="50%" y="55%" font-family="Segoe UI, Arial" font-size="34" font-weight="800"
+            fill="#FFD700" text-anchor="middle" dominant-baseline="middle">HL</text>
+    </svg>
+    <h1 class="brand-title">HL GROUPE</h1>
+  </header>
+
+  <main>
+    <section class="impact">
+      <p>🌍 Créativité et impact réel</p>
+      <p>🎬 Fond vidéo premium (ajoute drone-city.mp4)</p>
+      <p>✨ Transitions et effet verre modernes</p>
+    </section>
+
+    <section class="stats" aria-label="Chiffres clés">
+      <div class="card"><div class="metric">12+</div><div class="label">Années d’expertise</div></div>
+      <div class="card"><div class="metric">50+</div><div class="label">Projets livrés</div></div>
+      <div class="card"><div class="metric">A+</div><div class="label">Satisfaction clients</div></div>
+    </section>
+
+    <section class="team" aria-label="Équipe HL">
+      <div class="card member">
+        <h3>Hamouda Kadi</h3>
+        <p>Direction & Stratégie</p>
+      </div>
+      <div class="card member">
+        <h3>Équipe HL</h3>
+        <p>Création digitale</p>
+      </div>
+      <div class="card member">
+        <h3>Partenaires</h3>
+        <p>Innovation & Impact</p>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    &copy; 2025 HL GROUPE — Tous droits réservés
+    <p>© 2025 HL GROUPE — Contactez-nous</p>
+    <form class="form" onsubmit="event.preventDefault(); alert('Merci ! Nous vous recontacterons.');">
+      <input type="email" placeholder="Votre email" required>
+      <button type="submit">Envoyer</button>
+    </form>
   </footer>
 </body>
 </html>
